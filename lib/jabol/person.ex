@@ -3,11 +3,11 @@ defmodule Jabol.Person do
   Defines a Person schema with basic attributes for database storage
   """
   use Jabol.Schema
-  
+
   schema "people" do
-    field :name, :string
-    field :gender, :string
-    field :age, :integer
+    field(:name, :string)
+    field(:gender, :string)
+    field(:age, :integer)
 
     timestamps()
   end

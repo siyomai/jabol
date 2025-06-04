@@ -1,7 +1,7 @@
 import Config
 
 # General application configuration
-config :jabol, 
+config :jabol,
   repositories: [Jabol.Repo]
 
 # Import environment specific config

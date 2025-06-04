@@ -9,7 +9,7 @@ defmodule Jabol.TestHelpers do
     # Mock database setup logic here
     :ok
   end
-  
+
   def teardown_test_db do
     # Mock database teardown logic here
     :ok
