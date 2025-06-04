@@ -1,5 +1,9 @@
 # Jabol
 
+[![Build Status](https://github.com/siyomai/jabol/actions/workflows/ci.yml/badge.svg)](https://github.com/siyomai/jabol/actions/workflows/ci.yml)
+[![Hex.pm](https://img.shields.io/hexpm/v/jabol.svg)](https://hex.pm/packages/jabol)
+[![Docs](https://img.shields.io/badge/hex-docs-blue.svg)](https://hexdocs.pm/jabol)
+
 Jabol is a lightweight schema and data persistence library for Elixir applications. It provides a simple API for defining schemas, managing database connections, and performing CRUD operations.
 
 ## Features
