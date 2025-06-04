@@ -3,6 +3,9 @@ defmodule Jabol.Schema do
   Defines a Schema module for building database schemas.
   """
 
+  @doc """
+  When used, imports the schema functions and sets up defaults.
+  """
   defmacro __using__(_opts) do
     quote do
       import Jabol.Schema
@@ -26,8 +29,8 @@ defmodule Jabol.Schema do
       # Execute the schema block to collect fields
       unquote(block)
       
-      # Define the struct with the collected fields - without duplicating timestamp fields
-      field_map = Enum.map(@fields, fn {name, _type, opts} -> 
+      # Define the struct with the collected fields
+      field_map = Enum.map(@fields, fn {name, _type, opts} ->
         default = Keyword.get(opts, :default, nil)
         {name, default}
       end)

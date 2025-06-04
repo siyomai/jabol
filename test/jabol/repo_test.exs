@@ -1,7 +1,9 @@
 defmodule Jabol.RepoTest do
   use ExUnit.Case
   
-  alias Jabol.{Repo, Factory, Person}
+  alias Jabol.Factory
+  alias Jabol.Person
+  alias Jabol.Repo
   
   setup do
     # Setup a test database connection

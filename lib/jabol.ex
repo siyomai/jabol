@@ -17,7 +17,18 @@ defmodule Jabol do
   @doc """
   Returns the version of the Jabol library.
   """
+  @spec version() :: String.t()
   def version do
-    Application.spec(:jabol, :vsn)
+    Application.spec(:jabol, :vsn) || "0.1.0"
+  end
+  
+  @doc """
+  Hello world function, retained for compatibility.
+  
+  Returns `:world`.
+  """
+  @spec hello() :: :world
+  def hello do
+    :world
   end
 end

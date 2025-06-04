@@ -1,0 +1,74 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.18.0' # Match your project's Elixir version
+        otp-version: '26.0'      # Match with a compatible OTP version
+    
+    - name: Restore dependencies cache
+      uses: actions/cache@v3
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    
+    - name: Install dependencies
+      run: mix deps.get
+    
+    - name: Check formatting
+      run: mix format --check-formatted
+    
+    - name: Check warnings
+      run: mix compile --warnings-as-errors
+    
+    - name: Run tests
+      run: mix test
+    
+    - name: Run Credo
+      run: mix deps.get && mix credo
+
+  docs:
+    name: Generate and check docs
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.18.0'
+        otp-version: '26.0'
+    
+    - name: Restore dependencies cache
+      uses: actions/cache@v3
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    
+    - name: Install dependencies
+      run: mix deps.get
+    
+    - name: Generate docs
+      run: mix docs
+    
+    - name: Check doc coverage
+      run: mix inch || true # Optional, only if you have inch_ex installed

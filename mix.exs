@@ -28,7 +28,8 @@ defmodule Jabol.MixProject do
     [
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:jason, "~> 1.4", optional: true},
-      {:postgrex, "~> 0.17", optional: true}
+      {:postgrex, "~> 0.17", optional: true},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
   
