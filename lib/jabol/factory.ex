@@ -2,7 +2,7 @@ defmodule Jabol.Factory do
   @moduledoc """
   Factory module for creating test data
   """
-  
+
   @doc """
   Builds a struct of the given type with default attributes
   merged with the provided attributes.
@@ -12,7 +12,7 @@ defmodule Jabol.Factory do
     defaults = get_defaults(schema)
     struct(schema, Map.merge(defaults, attrs))
   end
-  
+
   @doc """
   Creates a test record through the repository
   """
@@ -22,7 +22,7 @@ defmodule Jabol.Factory do
     record = build(schema, attrs)
     Jabol.Repo.insert(schema, Map.from_struct(record))
   end
-  
+
   @doc """
   Returns a map of default attributes for a given schema
   """
@@ -34,12 +34,12 @@ defmodule Jabol.Factory do
       age: 30
     }
   end
-  
+
   # Generic defaults for any schema
   def get_defaults(_schema) do
     %{}
   end
-  
+
   @doc """
   Builds a list of structs
   """

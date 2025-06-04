@@ -32,14 +32,14 @@ defmodule Jabol.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
-  
+
   defp description do
     """
     Jabol is a lightweight schema and data persistence library for Elixir applications.
     It provides a simple API for defining schemas, managing database connections, and performing CRUD operations.
     """
   end
-  
+
   defp package do
     [
       name: "jabol",
@@ -48,20 +48,20 @@ defmodule Jabol.MixProject do
       links: %{"GitHub" => "https://github.com/yourusername/jabol"}
     ]
   end
-  
+
   defp docs do
     [
       main: "readme",
       extras: ["README.md"],
       groups_for_modules: [
-        "Core": [
+        Core: [
           Jabol.Schema,
           Jabol.Repo
         ],
-        "Testing": [
+        Testing: [
           Jabol.Factory
         ],
-        "Configuration": [
+        Configuration: [
           Jabol.Config.Database
         ]
       ]
