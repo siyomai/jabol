@@ -21,6 +21,16 @@ def deps do
 end
 ```
 
+## Documentation
+
+Complete documentation is available on [HexDocs](https://hexdocs.pm/jabol).
+
+You can also generate documentation locally with:
+
+```shell
+mix docs
+```
+
 ## Usage
 
 ### Configuration
