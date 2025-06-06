@@ -4,7 +4,7 @@ defmodule Jabol.MixProject do
   def project do
     [
       app: :jabol,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -45,7 +45,7 @@ defmodule Jabol.MixProject do
       name: "jabol",
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE),
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/yourusername/jabol"}
+      links: %{"GitHub" => "https://github.com/siyomai/jabol"}
     ]
   end
 
