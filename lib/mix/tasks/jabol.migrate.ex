@@ -94,7 +94,7 @@ defmodule Mix.Tasks.Jabol.Migrate do
     |> Enum.map(fn {_, module} -> module end)
   end
 
-  defp extract_version(module_name) do
+  defp extract_version(_module_name) do
     # Extract version from a module name (assuming it contains the version)
     # This is a placeholder - you might need a more robust implementation
     0
