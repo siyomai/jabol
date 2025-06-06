@@ -63,11 +63,11 @@ defmodule Mix.Tasks.Jabol.Migrate do
       [version, name] = String.split(filename, "_", parts: 2)
 
       # Convert the name to a module name (CamelCase)
-      module_name = 
+      module_name =
         name
         |> String.split("_")
         |> Enum.map_join("", &String.capitalize/1)
-        
+
       # Build the full module name
       module = Module.concat(["Jabol", "Migrations", module_name])
 
