@@ -4,7 +4,7 @@ defmodule Jabol.MixProject do
   def project do
     [
       app: :jabol,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -29,7 +29,8 @@ defmodule Jabol.MixProject do
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:jason, "~> 1.4", optional: true},
       {:postgrex, "~> 0.17", optional: true},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:phoenix, "~> 1.7", optional: true}
     ]
   end
 
@@ -63,6 +64,15 @@ defmodule Jabol.MixProject do
         ],
         Configuration: [
           Jabol.Config.Database
+        ],
+        Migration: [
+          Jabol.Migration,
+          Jabol.Migration.Runner
+        ],
+        Phoenix: [
+          Jabol.Phoenix,
+          Jabol.Phoenix.Changeset,
+          Jabol.Phoenix.Controller
         ]
       ]
     ]
