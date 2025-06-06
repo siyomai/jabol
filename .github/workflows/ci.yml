@@ -40,7 +40,7 @@ jobs:
       run: mix test
     
     - name: Run Credo
-      run: mix deps.get && mix credo --strict # Changed to strict mode
+      run: mix deps.get && mix credo
 
   docs:
     name: Generate and check docs

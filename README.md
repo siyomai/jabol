@@ -103,6 +103,59 @@ test "user creation" do
 end
 ```
 
+### Migrations
+
+Generate a new migration:
+
+```bash
+mix jabol.gen.migration create_users
+```
+
+This creates a migration file in `priv/migrations` with a timestamp prefix.
+
+Run migrations:
+
+```bash
+mix jabol.migrate
+```
+
+Roll back migrations:
+
+```bash
+mix jabol.migrate --down
+```
+
+Run migrations up to a specific version:
+
+```bash
+mix jabol.migrate --version 20230101120000
+```
+
+Example migration:
+
+```elixir
+defmodule Jabol.Migrations.CreateUsers do
+  use Jabol.Migration
+  
+  def up do
+    create_table(:users) do
+      add :name, :string
+      add :email, :string
+      add :age, :integer
+      
+      add :inserted_at, :naive_datetime
+      add :updated_at, :naive_datetime
+    end
+    
+    create_index(:users, [:email], unique: true)
+  end
+  
+  def down do
+    drop_table(:users)
+  end
+end
+```
+
 ## Development
 
 To contribute to Jabol:
