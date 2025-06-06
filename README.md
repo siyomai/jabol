@@ -20,7 +20,7 @@ Add `jabol` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:jabol, "~> 0.1.0"}
+    {:jabol, "~> 0.1.2"}
   ]
 end
 ```
@@ -152,6 +152,112 @@ defmodule Jabol.Migrations.CreateUsers do
   
   def down do
     drop_table(:users)
+  end
+end
+```
+
+## Using with Phoenix
+
+Jabol can be used as a replacement for Ecto in Phoenix applications. Add the following to your deps:
+
+```elixir
+def deps do
+  [
+    {:phoenix, "~> 1.7"},
+    {:jabol, "~> 0.1.1"}
+  ]
+end
+```
+
+### Setup
+
+Configure your Phoenix application to use Jabol in `application.ex`:
+
+```elixir
+def start(_type, _args) do
+  children = [
+    # ...
+    {Jabol.Repo, []}
+  ]
+
+  # Initialize Phoenix integration
+  Jabol.Phoenix.setup()
+  
+  # ...
+end
+```
+
+### Controllers
+
+Use Jabol in your controllers:
+
+```elixir
+defmodule MyAppWeb.UserController do
+  use MyAppWeb, :controller
+  use Jabol.Phoenix.Controller
+  
+  alias MyApp.User
+  
+  def index(conn, _params) do
+    users = Jabol.Repo.all(User)
+    render(conn, "index.json", users: users)
+  end
+  
+  def show(conn, %{"id" => id}) do
+    case load_resource(User, id) do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> render("error.json", message: "User not found")
+      user ->
+        render(conn, "show.json", user: user)
+    end
+  end
+end
+```
+
+### Changesets for Form Validation
+
+Use Jabol changesets for form validation:
+
+```elixir
+defmodule MyApp.User do
+  use Jabol.Schema
+  
+  schema "users" do
+    field :name, :string
+    field :email, :string
+    field :age, :integer
+    
+    timestamps()
+  end
+  
+  def changeset(user, attrs) do
+    user
+    |> Jabol.Phoenix.Changeset.cast(attrs, [:name, :email, :age])
+    |> Jabol.Phoenix.Changeset.validate_required([:name, :email])
+    |> Jabol.Phoenix.Changeset.validate_number(:age, greater_than: 18)
+  end
+end
+```
+
+In your controller:
+
+```elixir
+def create(conn, %{"user" => user_params}) do
+  changeset = User.changeset(%User{}, user_params)
+  
+  if changeset.valid? do
+    user = Jabol.Phoenix.Changeset.apply_changes(changeset)
+    {:ok, user} = Jabol.Repo.insert(User, Map.from_struct(user))
+    
+    conn
+    |> put_status(:created)
+    |> render("show.json", user: user)
+  else
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render("error.json", changeset: changeset)
   end
 end
 ```
